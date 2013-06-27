@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1>Step #1: Theatre Setup</h1>
+
+		<div>
+			<p>Enter the information about Seats.</p>
+
+			<img src="resources/gfx/seat_chart.gif" />
+		</div>
+
+		<h:form id="reg">
+
+			<p>Add Seats.</p>
+			<h:panelGrid columns="3" columnClasses="titleCell">
+				<h:outputLabel for="desc" value="Description" />
+				<h:inputText id="desc" value="#{newSeatType.description}" />
+				<h:message for="desc" errorClass="invalid" />
+
+				<h:outputLabel for="price" value="Price:" />
+				<h:inputText id="price" value="#{newSeatType.price}" />
+				<h:message for="price" errorClass="invalid" />
+
+				<h:outputLabel for="quantity" value="Number of Seats:" />
+				<h:inputText id="quantity" value="#{newSeatType.quantity}" />
+				<h:message for="quantity" errorClass="invalid" />
+			</h:panelGrid>
+
+			<p>
+				<h:panelGrid columns="2">
+					<h:commandButton id="Add" action="#{ticketController.create}"
+						value="Add" />
+
+					<h:messages styleClass="messages" errorClass="invalid"
+						infoClass="valid" warnClass="warning" globalOnly="true" />
+				</h:panelGrid>
+			</p>
+		</h:form>
+		<h:form id="reg2">
+
+			<h:panelGrid columns="1">
+
+			<h:commandButton id="Finish" action="#{ticketController.finish}"
+					value="Finish" styleClass="register" />
+
+			</h:panelGrid>
+
+			<h2>Seats List</h2>
+			<h:panelGroup rendered="#{empty seatTypes}">
+				<em>No Seats Added.</em>
+			</h:panelGroup>
+			<h:dataTable var="_seatType" value="#{seatTypes}"
+				rendered="#{not empty seatTypes}" styleClass="simpletablestyle">
+				<h:column>
+					<f:facet name="header">Id</f:facet>
+                #{_seatType.id}
+            </h:column>
+				<h:column>
+					<f:facet name="header">Name</f:facet>
+                #{_seatType.description}
+            </h:column>
+				<h:column>
+					<f:facet name="header">Price</f:facet>
+                $ #{_seatType.price}
+            </h:column>
+				<h:column>
+					<f:facet name="header">Quantity</f:facet>
+                #{_seatType.quantity}
+            </h:column>
+				<!-- 
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+              				<h:commandButton id="delete"
+							action="#{mainController.remove(_seatType.id)}"
+							 
+							value="Remove" />	
+            </h:column>
+             -->
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
